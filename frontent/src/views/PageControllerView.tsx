@@ -3,8 +3,10 @@ import { observer } from 'mobx-react';
 
 import { PageControllerStore, Page } from "../stores/PageControllerStore"
 import { WelcomeStore } from '../stores/WelcomeStore';
+import { WordSearchStore } from '../stores/WordSearchStore';
 
 import { WelcomeView } from './WelcomeView';
+import { WordSearchView } from './WordSearchView';
 
 import "../styles/HomePageStyle.scss"
 
@@ -22,6 +24,13 @@ export class PageControllerView extends React.Component<IProps> {
             return ( 
                 <WelcomeView
                     store={new WelcomeStore({PageController: store})}
+                />
+            )
+        }
+        else if (store.CurrentPage === Page.WordSearch) {
+            return ( 
+                <WordSearchView
+                    store={new WordSearchStore({PageController: store})}
                 />
             )
         }

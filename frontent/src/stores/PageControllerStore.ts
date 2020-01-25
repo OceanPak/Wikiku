@@ -18,16 +18,16 @@ export class PageControllerStore {
 
     @action
     ToWordSearch(): void {
-
+        this.CurrentPage = Page.WordSearch
     }
 
     @action
     ToLocationSearch(): void {
-
+        this.CurrentPage = Page.LocationSearch
     }
 
     @action
-    ToHaikuDisplay(): void {
-        
+    ToHaikuDisplay(content: string): void {
+        this.CurrentPage = Page.HaikuDisplay
     }
 }
