@@ -2,9 +2,8 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 
 import { HomePageStore } from "../stores/HomePageStore"
-import { WelcomeStore } from "../stores/WelcomeStore"
 
-import { WelcomeView } from './WelcomeView';
+import { PageControllerView } from './PageControllerView';
 
 import "../styles/HomePageStyle.scss"
 
@@ -23,7 +22,7 @@ export class HomePageView extends React.Component<IProps> {
                         Wiki-Ku
                     </div>
                 </div>
-                <WelcomeView store={new WelcomeStore({})}/>
+                <PageControllerView store={this.props.store.PageController}/>
                 <div className="footer">
                     <div className="authors">
                         Made for Hack@Brown 2020 by Ocean Pak and Paul Biberstein

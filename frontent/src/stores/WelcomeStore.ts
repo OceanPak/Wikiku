@@ -1,4 +1,5 @@
 import { computed, observable, action } from "mobx";
+import { PageControllerStore } from "./PageControllerStore";
 
 export class WelcomeStore {
 
@@ -6,6 +7,6 @@ export class WelcomeStore {
         Object.assign(this, initializer);
     }
 
-    @observable
-    public Width: number = 600;
+    readonly PageController: PageControllerStore;
+
 }

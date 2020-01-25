@@ -1,5 +1,12 @@
 import { computed, observable, action } from "mobx";
 
+export enum Page {
+    Welcome = 0,
+    WordSearch = 1,
+    LocationSearch = 2,
+    HaikuDisplay = 3
+}
+
 export class PageControllerStore {
 
     constructor(initializer: Partial<PageControllerStore>) {
@@ -7,8 +14,20 @@ export class PageControllerStore {
     }
 
     @observable
-    public CurrentPageIndex: number = 0;
+    public CurrentPage: Page = Page.Welcome;
 
-    @observable
-    public CurrentPages: JSX.Element[] = [];
+    @action
+    ToWordSearch(): void {
+
+    }
+
+    @action
+    ToLocationSearch(): void {
+
+    }
+
+    @action
+    ToHaikuDisplay(): void {
+        
+    }
 }

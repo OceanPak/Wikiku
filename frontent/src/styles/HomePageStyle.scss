@@ -20,22 +20,6 @@
         }
     }
     
-    .body {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-        align-content: center;
-
-        height: 80%;
-        width: 100%;
-
-
-        .welcome {
-            text-align: center;
-        }
-    }
-    
     .footer {
         display: flex;
         flex-direction: row;
