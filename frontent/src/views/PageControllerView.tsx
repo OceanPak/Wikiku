@@ -23,34 +23,38 @@ export class PageControllerView extends React.Component<IProps> {
 
     render() {
         let store = this.props.store
+        let page;
 
         if (store.CurrentPage === Page.Welcome) {
-            return ( 
+            page = ( 
                 <WelcomeView
                     store={new WelcomeStore({PageController: store})}
                 />
             )
         }
         else if (store.CurrentPage === Page.WordSearch) {
-            return ( 
+            page = ( 
                 <WordSearchView
                     store={new WordSearchStore({PageController: store})}
                 />
             )
         }
         else if (store.CurrentPage === Page.LocationSearch) {
-            return ( 
+            page = ( 
                 <LocationSearchView
                     store={new LocationSearchStore({PageController: store})}
                 />
             )
         }
         else if (store.CurrentPage === Page.HaikuDisplay) {
-            return ( 
+            page = ( 
                 <HaikuDisplayView
                     store={new HaikuDisplayStore({PageController: store})}
                 />
             )
         }
+        return <div style={{height: "80%", width: "100%", opacity: store.Opacity}}>
+            {page}
+        </div>
     }
 }

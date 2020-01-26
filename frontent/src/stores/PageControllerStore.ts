@@ -16,18 +16,35 @@ export class PageControllerStore {
     @observable
     public CurrentPage: Page = Page.Welcome;
 
+    @observable
+    public Opacity: number = 1;
+
     @action
     ToWordSearch(): void {
-        this.CurrentPage = Page.WordSearch
+        this.TransitionTo(Page.WordSearch)
     }
 
     @action
     ToLocationSearch(): void {
-        this.CurrentPage = Page.LocationSearch
+        this.TransitionTo(Page.LocationSearch)
     }
 
     @action
     ToHaikuDisplay(content: string): void {
-        this.CurrentPage = Page.HaikuDisplay
+        this.TransitionTo(Page.HaikuDisplay)
+    }
+
+    @action
+    TransitionTo(page: Page) {
+        console.log(this.Opacity)
+        if (this.Opacity < .01) {
+            this.CurrentPage = page
+            this.Opacity = 1
+        } else {
+            this.Opacity *= 5/6
+            setTimeout(() => {
+                this.TransitionTo(page);
+            }, 10);
+        }
     }
 }

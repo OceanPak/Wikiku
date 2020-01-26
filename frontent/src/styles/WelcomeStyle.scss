@@ -5,11 +5,23 @@
     align-items: center;
     align-content: center;
 
-    height: 80%;
+    height: 100%;
     width: 100%;
 
 
     .welcome {
+        h1 {
+            opacity: 0;
+            animation: fade-in 1s linear 0s 1 normal forwards;
+        }
+        h2 {
+            opacity: 0;
+            animation: fade-in 1s linear 0.5s 1 normal forwards;
+        }
+        .button-row {
+            opacity: 0;
+            animation: fade-in 1s linear 1.0s 1 normal forwards;
+        }
         text-align: center;
 
         .button-row {
@@ -46,4 +58,13 @@
             }
         }
     }
+}
+
+@keyframes fade-in {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+@keyframes fade-out {
+    from {opacity: 1;}
+    to {opacity: 0;}
 }
