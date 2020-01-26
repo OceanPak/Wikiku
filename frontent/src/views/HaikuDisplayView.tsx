@@ -49,6 +49,17 @@ export class HaikuDisplayView extends React.Component<IProps> {
         let store = this.props.store
         let deckBottomText = "Wasn't that such fun?\nWe should do it all again!\nPress below for more"
         let content;
+        let loading = (
+            <div className="sk-chase">
+                <div className="sk-chase-dot"></div>
+                <div className="sk-chase-dot"></div>
+                <div className="sk-chase-dot"></div>
+                <div className="sk-chase-dot"></div>
+                <div className="sk-chase-dot"></div>
+                <div className="sk-chase-dot"></div>
+            </div>
+        )
+
         if (store.HaikuIndex >= store.TotalHaikus) {
             content = (
                 <div className="haiku-display">
@@ -69,7 +80,11 @@ export class HaikuDisplayView extends React.Component<IProps> {
                     </div>
                     <div className="card" onPointerDown={this.onPointerDown} style={{transform: "translateX(" + store.FlingDelta + "px)"}}>
                         <div className="poem-text">
-                            {store.Haikus[store.HaikuIndex]}
+                            {store.HaikuIndex < store.Haikus.length ?
+                                store.Haikus[store.HaikuIndex]
+                            :
+                                loading
+                            }
                         </div>
                     </div>
                 </div>
@@ -79,12 +94,20 @@ export class HaikuDisplayView extends React.Component<IProps> {
                 <div className="haiku-display">
                     <div className="card">
                         <div className="poem-text">
-                            {store.Haikus[store.HaikuIndex + 1]}
+                            {store.HaikuIndex + 1 < store.Haikus.length ?
+                                store.Haikus[store.HaikuIndex + 1]
+                            :
+                                loading
+                            }
                         </div>
                     </div>
                     <div className="card" onPointerDown={this.onPointerDown} style={{transform: "translateX(" + store.FlingDelta + "px)"}}>
                         <div className="poem-text">
-                            {store.Haikus[store.HaikuIndex]}
+                            {store.HaikuIndex < store.Haikus.length ?
+                                store.Haikus[store.HaikuIndex]
+                            :
+                                loading
+                            }
                         </div>
                     </div>
 
