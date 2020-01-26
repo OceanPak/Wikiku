@@ -33,9 +33,19 @@ export class PageControllerStore {
     }
 
     @action
-    ToHaikuDisplay(titles: string[], firstPoem: string[][]): void {
-        this.GlobalState.articleTitles = titles
+    ToWelcome(): void {
+        this.TransitionTo(Page.Welcome)
+    }
+
+    @action
+    ToHaikuDisplay(titles: string[], firstPoem: string[][], isMapQuery=false): void {
+        if (isMapQuery) {
+            this.GlobalState.locations = titles
+        } else {
+            this.GlobalState.articleTitles = titles
+        }
         this.GlobalState.firstPoem = firstPoem
+        this.GlobalState.isMapQuery = isMapQuery;
         this.TransitionTo(Page.HaikuDisplay)
     }
 

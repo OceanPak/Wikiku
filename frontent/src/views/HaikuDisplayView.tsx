@@ -67,7 +67,7 @@ export class HaikuDisplayView extends React.Component<IProps> {
                         <div className="poem-text">
                             {deckBottomText}
                             {"\n"}
-                            <div className="button" onClick={() => store.PageController.ToWordSearch()}>
+                            <div className="button" onClick={() => store.PageController.ToWelcome()}>
                                 Again
                             </div>
                         </div>
@@ -81,7 +81,7 @@ export class HaikuDisplayView extends React.Component<IProps> {
                         <div className="poem-text">
                             {deckBottomText}
                             {"\n"}
-                            <div className="button" onClick={() => store.PageController.ToWordSearch()}>
+                            <div className="button" onClick={() => store.PageController.ToWelcome()}>
                                 Again
                             </div>
                         </div>

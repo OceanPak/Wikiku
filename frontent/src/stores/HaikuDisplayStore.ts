@@ -5,13 +5,21 @@ export class HaikuDisplayStore {
     constructor(initializer: Partial<HaikuDisplayStore>) {
         Object.assign(this, initializer);
 
-        if (initializer.PageController?.GlobalState.articleTitles) {
+        console.log("deciding which mode to intialize with")
+        if (initializer.PageController?.GlobalState.isMapQuery) {
+            console.log("initialized haiku maker in map mode")
+            this.Locations = initializer.PageController?.GlobalState.locations;
+            this.Haikus = []
+            this.MakePoem(initializer.PageController.GlobalState.firstPoem)
+            this.RequestMapPoem(1);
+        } else {
             console.log("initialized with titles " + initializer.PageController?.GlobalState.articleTitles)
             this.ArticleTitles = initializer.PageController?.GlobalState.articleTitles;
             this.Haikus = []
             this.MakePoem(initializer.PageController?.GlobalState.firstPoem)
             this.RequestPoem(1);
         }
+            
     }
 
     readonly PageController: PageControllerStore;
@@ -25,6 +33,8 @@ export class HaikuDisplayStore {
     ];
 
     readonly ArticleTitles: string[];
+
+    readonly Locations: any;
 
     @observable
     public HaikuIndex: number = 0;
@@ -87,6 +97,45 @@ export class HaikuDisplayStore {
         let addHaiku = (response: any) => {
             this.MakePoem(response);
             this.RequestPoem(titleIndex+1)
+        }
+        
+        xhr.open("GET", url, true);
+
+        xhr.onload = function (e) {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    console.log("Received couplet response for poem " + titleIndex)
+                    console.log(xhr.responseText);
+                    let parsed = JSON.parse(xhr.responseText);
+                    addHaiku(parsed.couplets);
+                } else {
+                    console.error(xhr.statusText);
+                    addHaiku([]);
+                }
+            }
+        };
+        xhr.onerror = function (e) {
+            console.error(xhr.statusText);
+            addHaiku([]);
+        };
+
+        xhr.send(null);
+    }
+
+    RequestMapPoem(titleIndex: number) {
+        if (titleIndex >= this.Locations.length) {
+            console.log("Reached end of article titles")
+            this.TotalHaikus = this.Haikus.length
+            return
+        }
+        let xhr = new XMLHttpRequest();
+        let title = encodeURIComponent(this.Locations[titleIndex][0])
+        let keywords = encodeURIComponent(this.Locations[titleIndex][1])
+        let url = `http://localhost:5000/GenerateMapHaiku?title=${title}&types=${keywords}`
+
+        let addHaiku = (response: any) => {
+            this.MakePoem(response);
+            this.RequestMapPoem(titleIndex+1)
         }
         
         xhr.open("GET", url, true);
