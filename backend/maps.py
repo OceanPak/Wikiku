@@ -1,5 +1,5 @@
 import requests
-API_KEY = "AIzaSyCpgI4jKI3vp0T96ZPo5ZnCRkCd9FlLU9s"
+API_KEY = "REDACTED"
 
 #CoordX = 41.8202681
 #CoordY = -71.4289196
