@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from flask_bootstrap import Bootstrap
-from flask_cors import CORS
+#from flask_cors import CORS
 import wikipedia
 import requests
 from operator import itemgetter
@@ -11,6 +11,7 @@ from test import rap, fetch_page_content, clean_article
 import time
 from flask import jsonify
 import re
+from maps import findClosestLandmark
 
 regex = re.compile('[@_!#$%^&*()<>?/\|}{~:]') 
 
@@ -59,7 +60,7 @@ for i in a:
         words = """""
 
 app = Flask(__name__)
-CORS(app)
+#CORS(app)
 Bootstrap(app)
 
 # This is for the form submission, don't worry about it being secure.
@@ -103,4 +104,58 @@ def generateHaiku():
     #end = time.time()
     #print(end - start)
     
+
+@app.route('/MapArticleTitles', methods=['GET', 'POST'])
+def mapArticle():
+    CoordX = request.args.get('CoordX')
+    CoordY = request.args.get('CoordY')
+    results = findClosestLandmark(CoordX, CoordY)
+    return jsonify(results=results)
+
+@app.route('/GenerateMapHaiku', methods=['GET', 'POST'])
+def generateMapHaiku():
+    title = request.args.get('articletitle')
+    types = request.args.get('types')
+    types = types.split(',')
+    print(types)
+    try:
+        wiki_page = wikipedia.page(title).url
+        print("worked?")
+        title, page = fetch_page_content(wiki_page)
+        title = clean_article(title)
+        sentences = [clean_article(sent).strip() for sent in sent_tokenize(page)]
+        couplets = rap(sentences)
+        if couplets == []:
+            try:
+                for j in types:
+                    print(j)
+                    wiki_page = wikipedia.page(j).url
+                    print("Worked?")
+                    #print(wiki_page)
+                    title, page = fetch_page_content(wiki_page)
+                    title = clean_article(title)
+                    sentences = [clean_article(sent).strip() for sent in sent_tokenize(page)]
+                    couplets = rap(sentences)
+                    couplets = [a for a in couplets if regex.search(a[0]) == None and regex.search(a[1]) == None]
+                    return jsonify(couplets=couplets)
+            except:
+                return jsonify(couplets=[])
+        else:
+            couplets = [a for a in couplets if regex.search(a[0]) == None and regex.search(a[1]) == None]
+            return jsonify(couplets=couplets)
+    except:
+        try:
+            for j in types:
+                print(j)
+                wiki_page = wikipedia.page(j).url
+                print("Worked?")
+                title, page = fetch_page_content(wiki_page)
+                title = clean_article(title)
+                sentences = [clean_article(sent).strip() for sent in sent_tokenize(page)]
+                couplets = rap(sentences)
+                couplets = [a for a in couplets if regex.search(a[0]) == None and regex.search(a[1]) == None]
+                return jsonify(couplets=couplets)
+        except:
+            return jsonify(couplets=[])
+
 app.run(debug=True)
