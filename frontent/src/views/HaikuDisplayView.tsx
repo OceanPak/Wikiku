@@ -1,12 +1,7 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 
-import { PageControllerStore } from '../stores/PageControllerStore';
 import { HaikuDisplayStore } from "../stores/HaikuDisplayStore"
-
-import { SearchBar } from "./SearchBar"
-
-
 
 import "../styles/HaikuDisplayStyle.scss"
 

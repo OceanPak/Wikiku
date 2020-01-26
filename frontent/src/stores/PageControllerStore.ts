@@ -19,6 +19,9 @@ export class PageControllerStore {
     @observable
     public Opacity: number = 1;
 
+    @observable
+    public GlobalState: any = {}
+
     @action
     ToWordSearch(): void {
         this.TransitionTo(Page.WordSearch)
@@ -30,7 +33,12 @@ export class PageControllerStore {
     }
 
     @action
-    ToHaikuDisplay(content: string): void {
+    ToHaikuDisplay(firstPoem: string[][], titles: string[]): void {
+        console.log("transitioning to haiku display")
+        console.log(firstPoem)
+        console.log(titles)
+        this.GlobalState.articleTitles = titles
+        this.GlobalState.firstPoem = firstPoem
         this.TransitionTo(Page.HaikuDisplay)
     }
 
