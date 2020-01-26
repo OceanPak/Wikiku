@@ -1,8 +1,6 @@
 from flask import Flask, render_template, request, redirect
-from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, validators
-from wtforms.validators import DataRequired
 from flask_bootstrap import Bootstrap
+from flask_cors import CORS
 import wikipedia
 import requests
 from operator import itemgetter
@@ -58,6 +56,7 @@ for i in a:
         words = """""
 
 app = Flask(__name__)
+CORS(app)
 Bootstrap(app)
 
 # This is for the form submission, don't worry about it being secure.
