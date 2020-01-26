@@ -31,6 +31,9 @@ export class WelcomeView extends React.Component<IProps> {
                         <div className="button" onClick={() => store.PageController.ToLocationSearch()}>
                             By Location
                         </div>
+                        <div className="button" onClick={() => store.PageController.ToHaikuDisplay("")}>
+                            Debug
+                        </div>
                     </span>
                 </div>
             </div>
