@@ -10,6 +10,9 @@ import string
 from test import rap, fetch_page_content, clean_article
 import time
 from flask import jsonify
+import re
+
+regex = re.compile('[@_!#$%^&*()<>?/\|}{~:]') 
 
 """
 views = []
@@ -95,6 +98,7 @@ def generateHaiku():
     title = clean_article(title)
     sentences = [clean_article(sent).strip() for sent in sent_tokenize(page)]
     couplets = rap(sentences)
+    couplets = [a for a in couplets if regex.search(a[0]) == None and regex.search(a[1]) == None]
     return jsonify(couplets=couplets)
     #end = time.time()
     #print(end - start)
