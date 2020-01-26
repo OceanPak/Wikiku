@@ -33,10 +33,7 @@ export class PageControllerStore {
     }
 
     @action
-    ToHaikuDisplay(firstPoem: string[][], titles: string[]): void {
-        console.log("transitioning to haiku display")
-        console.log(firstPoem)
-        console.log(titles)
+    ToHaikuDisplay(titles: string[], firstPoem: string[][]): void {
         this.GlobalState.articleTitles = titles
         this.GlobalState.firstPoem = firstPoem
         this.TransitionTo(Page.HaikuDisplay)
@@ -44,7 +41,6 @@ export class PageControllerStore {
 
     @action
     TransitionTo(page: Page) {
-        console.log(this.Opacity)
         if (this.Opacity < .01) {
             this.CurrentPage = page
             this.Opacity = 1

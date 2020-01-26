@@ -55,7 +55,12 @@ export class WordSearchStore {
         xhr.open("GET", url, true);
 
         let submit = (titles: any, response: any) => {
-            if (response.couplets == []) {
+            console.log("trying to submit with first poem")
+            console.log(response)
+            console.log(response.couplets)
+            console.log(titles)
+            if (response.couplets.length === 0) {
+                console.log("retrying getting first poem")
                 this.GetFirstPoem(titles.slice(1))
             } else {
                 this.PageController.ToHaikuDisplay(titles, response.couplets)
@@ -66,6 +71,8 @@ export class WordSearchStore {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
                     let parsed = JSON.parse(xhr.responseText)
+                    console.log("got first poem")
+                    console.log(parsed)
                     submit(articleTitles, parsed)
                 } else {
                     console.error(xhr.statusText);

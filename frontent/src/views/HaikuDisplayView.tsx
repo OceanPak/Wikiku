@@ -43,14 +43,13 @@ export class HaikuDisplayView extends React.Component<IProps> {
             return;
         }
         this.props.store.FlingDelta += e.movementX
-        console.log(e.movementX)
     }
 
     render() {
         let store = this.props.store
         let deckBottomText = "Wasn't that such fun?\nWe should do it all again!\nPress below for more"
         let content;
-        if (store.HaikuIndex >= store.Haikus.length) {
+        if (store.HaikuIndex >= store.TotalHaikus) {
             content = (
                 <div className="haiku-display">
                     <div className="deck-bottom">
@@ -60,7 +59,7 @@ export class HaikuDisplayView extends React.Component<IProps> {
                     </div>
                 </div>
             )
-        } else if (store.HaikuIndex == store.Haikus.length - 1) {
+        } else if (store.HaikuIndex == store.TotalHaikus - 1) {
             content = (
                 <div className="haiku-display">
                     <div className="deck-bottom">
